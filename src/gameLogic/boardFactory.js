@@ -1,4 +1,5 @@
 const MAX_BOARD = 9;
+const MIN_BOARD = 0;
 
 function boardFactory() {
 
@@ -25,10 +26,11 @@ function boardFactory() {
 
     //Checks if ship length doesn't exceed board
     function boardLengthCheck(ship, coord) {
-        if(coord + (ship.getLength()-1) <= MAX_BOARD ) {
+        if(coord + (ship.getLength()-1) <= MAX_BOARD && (coord >= MIN_BOARD)) {
             return true;
         } else return false;
     }
+
 
     //checks if empty cell
     function checkCellFree(xCoord, yCoord, ship) {
@@ -49,6 +51,31 @@ function boardFactory() {
         return free;
     }
 
+    function placeShipBorder(ship, xCoord, yCoord) {
+        if(isVertical === false){
+            if(yCoord-1 >= MIN_BOARD){
+                for(let i =-1; i<=1; i++){
+                    board[xCoord + i][yCoord-1] = 'x';
+                }
+            }
+            if((xCoord-1) >= MIN_BOARD){
+                for(let i=0; i<ship.getLength(); i++){
+                        board[xCoord-1][yCoord+i] = 'x';
+                }
+            }   
+            if(((yCoord + ship.getLength()))<=MAX_BOARD){
+                for(let i =-1; i<=1; i++){
+                    board[xCoord+i][((yCoord + ship.getLength()))] = 'x';
+                }
+            }
+            if((xCoord+1) <= MAX_BOARD){
+                for(let i=0; i<ship.getLength(); i++){
+                        board[xCoord+1][yCoord+i] = 'x';
+                }
+            }   
+        }
+    }
+
 
 
     function placeShip(ship, xCoord, yCoord) {
@@ -57,6 +84,7 @@ function boardFactory() {
                 for(let i=0; i<ship.getLength(); i++){
                     board[xCoord][yCoord + i] = 0;
                 }
+                placeShipBorder(ship, xCoord, yCoord);
             }
         } else if (isVertical === true){
             if ((boardLengthCheck(ship, xCoord)) && checkCellFree(xCoord, yCoord, ship)){
@@ -65,7 +93,6 @@ function boardFactory() {
                 }
             }
         }
-
     }
         
     return {
