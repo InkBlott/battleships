@@ -9,7 +9,7 @@ test('place ship horizontally if not within bounds of another ship', () => {
     board.makeBoard();
     board.placeShip(ship, 6, 4);
     expect(board.board[6][7] && board.board[6][4]).toBe(0);
-    board.placeShip(ship2, 5, 8)
+    board.placeShip(ship2, 9, 8);
     console.table(board.board);
     expect(board.board[5][8]).toBe('x');
 })

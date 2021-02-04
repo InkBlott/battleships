@@ -50,29 +50,48 @@ function boardFactory() {
         }
         return free;
     }
+    
 
     function placeShipBorder(ship, xCoord, yCoord) {
         if(isVertical === false){
+
+            //left border
             if(yCoord-1 >= MIN_BOARD){
-                for(let i =-1; i<=1; i++){
-                    board[xCoord + i][yCoord-1] = 'x';
-                }
+                board[xCoord][yCoord-1] = 'x';
             }
+            //top border
             if((xCoord-1) >= MIN_BOARD){
                 for(let i=0; i<ship.getLength(); i++){
-                        board[xCoord-1][yCoord+i] = 'x';
+                    board[xCoord-1][yCoord+i] = 'x';
                 }
             }   
+            //right border
             if(((yCoord + ship.getLength()))<=MAX_BOARD){
-                for(let i =-1; i<=1; i++){
-                    board[xCoord+i][((yCoord + ship.getLength()))] = 'x';
-                }
+                board[xCoord][((yCoord + ship.getLength()))] = 'x';
             }
+            //bot border
             if((xCoord+1) <= MAX_BOARD){
                 for(let i=0; i<ship.getLength(); i++){
-                        board[xCoord+1][yCoord+i] = 'x';
+                    board[xCoord+1][yCoord+i] = 'x';
                 }
             }   
+            //corners:
+            //NW
+            if((xCoord-1 )>=MIN_BOARD && (yCoord-1) >= MIN_BOARD){
+                board[xCoord-1][yCoord-1] = 'x';
+            }
+            //NE
+            if((xCoord-1 )>=MIN_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
+                board[xCoord-1][yCoord+ship.getLength()] = 'x';
+            }
+            //SW
+            if((xCoord+1 )<=MAX_BOARD && (yCoord-1) >= MIN_BOARD){
+                board[xCoord+1][yCoord-1] = 'x';
+            }
+            //SE
+            if((xCoord-1 )<=MAX_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
+                board[xCoord+1][yCoord+ship.getLength()] = 'x';
+            }
         }
     }
 
