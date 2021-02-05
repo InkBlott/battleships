@@ -18,6 +18,7 @@ test('place ship horizontally & vertically if not within bounds of another ship'
     expect(board.board[0][9] && board.board[2][9]).toBe(0);
     board.placeShip(ship4, 1 ,1 );
     console.table(board.board);
+    expect(board.board[1][1]).toBe(0);
 })
 
 test('Set vertical or horizontal', () => {

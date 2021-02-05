@@ -91,7 +91,7 @@ function boardFactory() {
                 board[xCoord+1][yCoord-1] = 'x';
             }
             //SE
-            if((xCoord-1 )<=MAX_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
+            if((xCoord+1 )<=MAX_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
                 board[xCoord+1][yCoord+ship.getLength()] = 'x';
             }
         } 
@@ -118,7 +118,23 @@ function boardFactory() {
                     board[xCoord+i][yCoord+1] = 'x';
                 }
             } 
-
+            //corners:
+            //NW
+            if((xCoord-1 )>=MIN_BOARD && (yCoord-1) >= MIN_BOARD){
+                board[xCoord-1][yCoord-1] = 'x';
+            }
+            //NE
+            if((xCoord-1 )>=MIN_BOARD && (yCoord+1) <= MAX_BOARD){
+                board[xCoord-1][yCoord+1] = 'x';
+            }
+            //SW
+            if((xCoord+ship.getLength())<=MAX_BOARD && (yCoord-1) >= MIN_BOARD){
+                board[xCoord+ship.getLength()][yCoord-1] = 'x';
+            }
+            //SE
+            if((xCoord+ship.getLength())<=MAX_BOARD && (yCoord+1) <= MAX_BOARD){
+                board[xCoord+ship.getLength()][yCoord+1] = 'x';
+            }
             
 
         }
