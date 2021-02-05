@@ -36,13 +36,13 @@ function boardFactory() {
     function checkCellFree(xCoord, yCoord, ship) {
         let free = true;
         if (isVertical===false){
-            for (let i=0; i <=ship.getLength(); i++){
+            for (let i=0; i <ship.getLength(); i++){
                 if(board[xCoord][yCoord + i] !== undefined){
                     free = false;
                 } 
             } 
         } else if (isVertical===true){
-            for (let i=0; i <=ship.getLength(); i++){
+            for (let i=0; i <ship.getLength(); i++){
                 if(board[xCoord+i][yCoord] !== undefined){
                     free = false;
                 } 
@@ -53,6 +53,8 @@ function boardFactory() {
     
 
     function placeShipBorder(ship, xCoord, yCoord) {
+        
+        //Horizontal ship borders
         if(isVertical === false){
 
             //left border
@@ -92,6 +94,33 @@ function boardFactory() {
             if((xCoord-1 )<=MAX_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
                 board[xCoord+1][yCoord+ship.getLength()] = 'x';
             }
+        } 
+
+        //Vertical ship borders
+        if (isVertical === true) {
+            //top border
+            if(xCoord-1 >= MIN_BOARD){
+                board[xCoord-1][yCoord] = 'x';
+            }
+            //bottom border
+             if(((xCoord + ship.getLength()))<=MAX_BOARD){
+                board[(xCoord + ship.getLength())][yCoord] = 'x';
+            }
+            //left border
+            if((yCoord-1) >= MIN_BOARD){
+                for(let i=0; i<ship.getLength(); i++){
+                    board[xCoord+i][yCoord-1] = 'x';
+                }
+            } 
+            //right border
+            if((yCoord+1) <= MAX_BOARD){
+                for(let i=0; i<ship.getLength(); i++){
+                    board[xCoord+i][yCoord+1] = 'x';
+                }
+            } 
+
+            
+
         }
     }
 
@@ -110,6 +139,7 @@ function boardFactory() {
                 for(let i=0; i<ship.getLength(); i++){
                     board[xCoord+i][yCoord] = 0;
                 }
+                placeShipBorder(ship, xCoord, yCoord);
             }
         }
     }

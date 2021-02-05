@@ -2,16 +2,22 @@ import {boardFactory} from '../gameLogic/boardFactory'
 import {shipFactory} from '../gameLogic/shipFactory'
 
 
-test('place ship horizontally if not within bounds of another ship', () => {
+test('place ship horizontally & vertically if not within bounds of another ship', () => {
     const board = boardFactory();
-    const ship = shipFactory(4)
+    const ship = shipFactory(4);
     const ship2 = shipFactory(2);
+    const ship3 = shipFactory(3);
+    const ship4 = shipFactory(1);
     board.makeBoard();
     board.placeShip(ship, 6, 4);
     expect(board.board[6][7] && board.board[6][4]).toBe(0);
-    board.placeShip(ship2, 9, 8);
-    console.table(board.board);
+    board.placeShip(ship2, 4, 8);
     expect(board.board[5][8]).toBe('x');
+    board.setVertical();
+    board.placeShip(ship3, 0, 9);
+    expect(board.board[0][9] && board.board[2][9]).toBe(0);
+    board.placeShip(ship4, 1 ,1 );
+    console.table(board.board);
 })
 
 test('Set vertical or horizontal', () => {
