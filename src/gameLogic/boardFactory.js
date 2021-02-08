@@ -52,47 +52,47 @@ function boardFactory() {
     }
     
 
-    function placeShipBorder(ship, xCoord, yCoord) {
+    function placeShipBorder(length, xCoord, yCoord, mark) {
         
         //Horizontal ship borders
         if(isVertical === false){
 
             //left border
             if(yCoord-1 >= MIN_BOARD){
-                board[xCoord][yCoord-1] = 'x';
+                board[xCoord][yCoord-1] = mark;
             }
             //top border
             if((xCoord-1) >= MIN_BOARD){
-                for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord-1][yCoord+i] = 'x';
+                for(let i=0; i<length; i++){
+                    board[xCoord-1][yCoord+i] = mark;
                 }
             }   
             //right border
-            if(((yCoord + ship.getLength()))<=MAX_BOARD){
-                board[xCoord][((yCoord + ship.getLength()))] = 'x';
+            if(((yCoord + length))<=MAX_BOARD){
+                board[xCoord][((yCoord + length))] = mark;
             }
             //bot border
             if((xCoord+1) <= MAX_BOARD){
-                for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord+1][yCoord+i] = 'x';
+                for(let i=0; i<length; i++){
+                    board[xCoord+1][yCoord+i] = mark;
                 }
             }   
             //corners:
             //NW
             if((xCoord-1 )>=MIN_BOARD && (yCoord-1) >= MIN_BOARD){
-                board[xCoord-1][yCoord-1] = 'x';
+                board[xCoord-1][yCoord-1] = mark;
             }
             //NE
-            if((xCoord-1 )>=MIN_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
-                board[xCoord-1][yCoord+ship.getLength()] = 'x';
+            if((xCoord-1 )>=MIN_BOARD && (yCoord+length) <= MAX_BOARD){
+                board[xCoord-1][yCoord+length] = mark;
             }
             //SW
             if((xCoord+1 )<=MAX_BOARD && (yCoord-1) >= MIN_BOARD){
-                board[xCoord+1][yCoord-1] = 'x';
+                board[xCoord+1][yCoord-1] = mark;
             }
             //SE
-            if((xCoord+1 )<=MAX_BOARD && (yCoord+ship.getLength()) <= MAX_BOARD){
-                board[xCoord+1][yCoord+ship.getLength()] = 'x';
+            if((xCoord+1 )<=MAX_BOARD && (yCoord+length) <= MAX_BOARD){
+                board[xCoord+1][yCoord+length] = mark;
             }
         } 
 
@@ -100,40 +100,40 @@ function boardFactory() {
         if (isVertical === true) {
             //top border
             if(xCoord-1 >= MIN_BOARD){
-                board[xCoord-1][yCoord] = 'x';
+                board[xCoord-1][yCoord] = mark;
             }
             //bottom border
-             if(((xCoord + ship.getLength()))<=MAX_BOARD){
-                board[(xCoord + ship.getLength())][yCoord] = 'x';
+             if(((xCoord + length))<=MAX_BOARD){
+                board[(xCoord + length)][yCoord] = mark;
             }
             //left border
             if((yCoord-1) >= MIN_BOARD){
-                for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord+i][yCoord-1] = 'x';
+                for(let i=0; i<length; i++){
+                    board[xCoord+i][yCoord-1] = mark;
                 }
             } 
             //right border
             if((yCoord+1) <= MAX_BOARD){
-                for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord+i][yCoord+1] = 'x';
+                for(let i=0; i<length; i++){
+                    board[xCoord+i][yCoord+1] = mark;
                 }
             } 
             //corners:
             //NW
             if((xCoord-1 )>=MIN_BOARD && (yCoord-1) >= MIN_BOARD){
-                board[xCoord-1][yCoord-1] = 'x';
+                board[xCoord-1][yCoord-1] = mark;
             }
             //NE
             if((xCoord-1 )>=MIN_BOARD && (yCoord+1) <= MAX_BOARD){
-                board[xCoord-1][yCoord+1] = 'x';
+                board[xCoord-1][yCoord+1] = mark;
             }
             //SW
-            if((xCoord+ship.getLength())<=MAX_BOARD && (yCoord-1) >= MIN_BOARD){
-                board[xCoord+ship.getLength()][yCoord-1] = 'x';
+            if((xCoord+length)<=MAX_BOARD && (yCoord-1) >= MIN_BOARD){
+                board[xCoord+length][yCoord-1] = mark;
             }
             //SE
-            if((xCoord+ship.getLength())<=MAX_BOARD && (yCoord+1) <= MAX_BOARD){
-                board[xCoord+ship.getLength()][yCoord+1] = 'x';
+            if((xCoord+length)<=MAX_BOARD && (yCoord+1) <= MAX_BOARD){
+                board[xCoord+length][yCoord+1] = mark;
             }
             
 
@@ -146,17 +146,64 @@ function boardFactory() {
         if(isVertical === false){
             if ((boardLengthCheck(ship, yCoord)) && checkCellFree(xCoord, yCoord, ship)){
                 for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord][yCoord + i] = 0;
+                    board[xCoord][yCoord + i] = ship;
                 }
-                placeShipBorder(ship, xCoord, yCoord);
+                placeShipBorder(ship.getLength(), xCoord, yCoord, 'x');
             }
         } else if (isVertical === true){
             if ((boardLengthCheck(ship, xCoord)) && checkCellFree(xCoord, yCoord, ship)){
                 for(let i=0; i<ship.getLength(); i++){
-                    board[xCoord+i][yCoord] = 0;
+                    board[xCoord+i][yCoord] = ship;
                 }
-                placeShipBorder(ship, xCoord, yCoord);
+                placeShipBorder(ship.getLength(), xCoord, yCoord, 'x');
             }
+        }
+    }
+
+    function receiveAttack(xCoord, yCoord){
+        if(typeof (board[xCoord][yCoord]) === 'object'){
+            const shipShotAt = board[xCoord][yCoord];
+            shipShotAt.hit();
+            board[xCoord][yCoord]= '@';
+            if(shipShotAt.isSunk()){   
+                let len = 1; 
+                if(((board[xCoord+1][yCoord]) === '@') || ((board[xCoord-1][yCoord]) === '@')){
+                    isVertical=true;
+                    while( board[xCoord-1][yCoord] === '@'){
+                        xCoord = xCoord-1;
+                    }
+                    let coordHolder = xCoord;
+                    while( board[coordHolder+1][yCoord] === '@'){
+                        coordHolder = coordHolder+1;
+                        len = len+1;
+                    }
+                    placeShipBorder(len, xCoord, yCoord, '#');
+                    for(let i=0; i<len; i++){
+                        board[xCoord+i][yCoord] = '!';
+                    }
+                }        
+                if(((board[xCoord][yCoord-1]) === '@') || ((board[xCoord][yCoord+1]) === '@')){
+                    isVertical=false;
+                    while( board[xCoord][yCoord-1] === '@'){
+                        yCoord = yCoord-1;
+                    }
+                    let coordHolder = yCoord;
+                    while( board[xCoord][coordHolder+1] === '@'){
+                        coordHolder = coordHolder+1;
+                        len = len+1;
+                    }
+                    placeShipBorder(len, xCoord, yCoord, '#');
+                    for(let i=0; i<len; i++){
+                        board[xCoord][yCoord+i] = '!';
+                    }
+                }          
+            }
+        }   
+        else if (board[xCoord][yCoord] === '#' || board[xCoord][yCoord] === '!' || board[xCoord][yCoord] === '@' || board[xCoord][yCoord] === '*'){
+            return;
+        }
+        else {
+            board[xCoord][yCoord] = '*';
         }
     }
         
@@ -167,6 +214,7 @@ function boardFactory() {
         placeShip,
         setVertical,
         getVertical : () => isVertical,
+        receiveAttack,
 
     }
 

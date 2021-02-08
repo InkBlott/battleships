@@ -10,15 +10,14 @@ test('place ship horizontally & vertically if not within bounds of another ship'
     const ship4 = shipFactory(1);
     board.makeBoard();
     board.placeShip(ship, 6, 4);
-    expect(board.board[6][7] && board.board[6][4]).toBe(0);
+    expect(board.board[6][7] && board.board[6][4]).toBe(ship);
     board.placeShip(ship2, 4, 8);
     expect(board.board[5][8]).toBe('x');
     board.setVertical();
     board.placeShip(ship3, 0, 9);
-    expect(board.board[0][9] && board.board[2][9]).toBe(0);
+    expect(board.board[0][9] && board.board[2][9]).toBe(ship3);
     board.placeShip(ship4, 1 ,1 );
-    console.table(board.board);
-    expect(board.board[1][1]).toBe(0);
+    expect(board.board[1][1]).toBe(ship4);
 })
 
 test('Set vertical or horizontal', () => {
@@ -27,17 +26,6 @@ test('Set vertical or horizontal', () => {
     board.setVertical();
     expect(board.getVertical()).toBe(true);
 })
-
-test('place ship vertically', () =>{
-    const board = boardFactory();
-    const ship = shipFactory(3)
-    board.makeBoard();
-    board.setVertical();
-    board.placeShip(ship, 3, 8);
-    expect(board.board[3][8] && board.board[3][10]).toBe(0);
-})
-
-
 
 test('Get filled board to be empty', () => {
     const board = boardFactory();
@@ -48,12 +36,17 @@ test('Get filled board to be empty', () => {
     expect(board.board[2][2]).toBe(undefined);
 })
 
-
-test('board', () => {
-    const board = boardFactory();
+test('Ship gets hit at specified coords, gets sunk if all areas hit', () => {
+    const board=boardFactory();
     board.makeBoard();
-    board.board[4][6] = 'x';
-    // console.table(board.board);
+    const ship = shipFactory(2);
+    board.placeShip(ship, 2, 2);
+    console.log((board.board).indexOf(ship));
+    board.receiveAttack(2, 3);
+    board.receiveAttack(2,2);
+    expect(ship.getLives()).toEqual(['x', 'x']);
+    expect(ship.isSunk()).toBe(true);
+    console.table(board.board);
 })
 
 

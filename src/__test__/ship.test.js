@@ -22,18 +22,12 @@ test('return length 1 if provided <1', () => {
 
 test('hit area returns where the ship was hit', () =>{
   const ship = shipFactory(3);
-  ship.hitArea(2);  
-  expect(ship.getLives()).toEqual([undefined, 'x',])
-})
-
-test('ship can\'t be hit outside ship area', () =>{
-  const ship = shipFactory(1);
-  ship.hitArea(6);  
-  expect(ship.getLives()).toEqual([])
+  ship.hit();  
+  expect(ship.getLives()).toEqual(['x'])
 })
 
 test('Ship sinks if all areas hit', ()=>{
   const ship = shipFactory(1);
-  ship.hitArea(1);
+  ship.hit();
   expect(ship.isSunk()).toBe(true);
 })

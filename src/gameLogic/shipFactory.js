@@ -19,16 +19,17 @@ function shipFactory(length){
 
     const shipLength = fixedLength(length)
 
-    function hitArea(position) {
-        if(position >= MIN_LENGTH && position <= length){
-            lives[position-1] = 'x'; 
-        }               
+    function hit() {
+        if(lives.length <= length){
+            lives.push('x'); 
+        }
+                     
     }
 
     return {
         getLength: () => shipLength,
         getLives: () => lives,
-        hitArea,
+        hit,
         isSunk,
     }
 }
