@@ -41,7 +41,6 @@ test('Ship gets hit at specified coords, gets sunk if all areas hit', () => {
     board.makeBoard();
     const ship = shipFactory(2);
     board.placeShip(ship, 2, 2);
-    console.log((board.board).indexOf(ship));
     board.receiveAttack(2, 3);
     board.receiveAttack(2,2);
     expect(ship.getLives()).toEqual(['x', 'x']);
@@ -49,4 +48,17 @@ test('Ship gets hit at specified coords, gets sunk if all areas hit', () => {
     console.table(board.board);
 })
 
-
+test('Automatic board population fills 20 cells', () => {
+    const board=boardFactory();
+    board.makeBoard();
+    board.populateBoard();
+    let cells=0;
+    for(let i = 0; i <= 9 ; i++){
+        for( let x =0; x<= 9; x++){
+            if(typeof (board.board)[i][x] === "object"){
+                cells = cells+1;
+            }
+        }
+    }
+    expect(cells).toBe(20);
+})
