@@ -1,0 +1,30 @@
+.boardButton{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(95, 166, 247);
+    border-color: rgb(79, 79, 245);
+}
+
+.boardButton:hover{
+    background-color: rgb(115, 175, 245);
+}
+
+.miss{
+    background-color:  rgb(64, 114, 170);
+}
+
+.hit{
+    background-color:  rgb(235, 160, 99);
+}
+
+.sunken{
+    background-color:  rgb(233, 85, 85);
+}
+
+.sunkenBorder{
+    background-color:  rgb(64, 114, 170);
+}
+
+.noHover{
+    pointer-events: none;
+}

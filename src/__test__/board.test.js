@@ -39,13 +39,24 @@ test('Get filled board to be empty', () => {
 test('Ship gets hit at specified coords, gets sunk if all areas hit', () => {
     const board=boardFactory();
     board.makeBoard();
-    const ship = shipFactory(2);
+    const ship = shipFactory(1);
+    const ship2 = shipFactory(2);
+    const ship3 = shipFactory(3);
     board.placeShip(ship, 2, 2);
-    board.receiveAttack(2, 3);
+    board.placeShip(ship2, 0, 8);
+    board.setVertical();
+    board.placeShip(ship3, 2, 0);
     board.receiveAttack(2,2);
-    expect(ship.getLives()).toEqual(['x', 'x']);
+    board.receiveAttack(0,8);
+    board.receiveAttack(0,9);
+    board.receiveAttack(2,0);
+    board.receiveAttack(3,0);
+    board.receiveAttack(4, 0);
     expect(ship.isSunk()).toBe(true);
+    expect(ship2.isSunk()).toBe(true);
     console.table(board.board);
+
+  
 })
 
 test('Automatic board population fills 20 cells', () => {

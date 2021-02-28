@@ -15,8 +15,8 @@ function boardFactory() {
 
     //Creates 10x10 matrix
     function makeBoard() {
-        for(var i=0; i<=9; i++){
-            board[i] = new Array(10).fill();
+        for(let i=0; i<=9; i++){
+            board[i] = new Array(10).fill('~');
           }
     }
 
@@ -32,7 +32,7 @@ function boardFactory() {
         if (isVertical === false) {
             for (let i = 0; i < ship.getLength(); i++) {
                 if ((yCoord + i) <= MAX_BOARD) {
-                    if ((board[xCoord][yCoord + i] !== undefined)) {
+                    if ((board[xCoord][yCoord + i] !== '~')) {
                         free = false;
                     } 
                 }else free = false;
@@ -40,7 +40,7 @@ function boardFactory() {
         } else if (isVertical === true) {
             for (let i = 0; i < ship.getLength(); i++) {
                 if((xCoord + i) <= MAX_BOARD){
-                    if (board[xCoord + i][yCoord] !== undefined) {
+                    if (board[xCoord + i][yCoord] !== '~') {
                         free = false;
                     }
                 } else free =false;
@@ -176,13 +176,14 @@ function boardFactory() {
     //Replaces sunken ships symbols, places a new border around the sunken ship
     function renderSunken(xCoord, yCoord){
         let len = 1; 
-        if(((board[xCoord+1][yCoord]) === '@') || ((board[xCoord-1][yCoord]) === '@')){
+        
+        if(((xCoord+1 <= MAX_BOARD) && ((board[xCoord+1][yCoord]) === '@')) || ((xCoord-1 >= MIN_BOARD) && ((board[xCoord-1][yCoord]) === '@'))){
             isVertical=true;
-            while( board[xCoord-1][yCoord] === '@'){
+            while(xCoord-1 >= MIN_BOARD && board[xCoord-1][yCoord] === '@'){
                 xCoord = xCoord-1;
             }
             let coordHolder = xCoord;
-            while( board[coordHolder+1][yCoord] === '@'){
+            while(coordHolder+1 <= MAX_BOARD && board[coordHolder+1][yCoord] === '@'){
                 coordHolder = coordHolder+1;
                 len = len+1;
             }
@@ -191,7 +192,7 @@ function boardFactory() {
                 board[xCoord+i][yCoord] = '!';
             }
         }        
-        if(((board[xCoord][yCoord-1]) === '@') || ((board[xCoord][yCoord+1]) === '@')){
+        if(((yCoord-1 >= MIN_BOARD) && ((board[xCoord][yCoord-1]) === '@')) || ((yCoord+1 <= MAX_BOARD) && ((board[xCoord][yCoord+1]) === '@'))){
             isVertical=false;
             while( board[xCoord][yCoord-1] === '@'){
                 yCoord = yCoord-1;
@@ -205,7 +206,13 @@ function boardFactory() {
             for(let i=0; i<len; i++){
                 board[xCoord][yCoord+i] = '!';
             }
+        }
+        else {
+            placeShipBorder(len, xCoord, yCoord, '#');
+            board[xCoord][yCoord] = '!';
+
         }  
+
     }
 
     function populateBoard(){
