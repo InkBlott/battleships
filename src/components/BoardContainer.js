@@ -11,7 +11,6 @@ function BoardContainer({playerBoard, cpuBoard,  handler}){
                     <Board board={playerBoard} isCpu={false}/>
                     <Board handler={handler} board={cpuBoard} isCpu={true}/>
                 </div>
-                }
             </div>
           
         </div>

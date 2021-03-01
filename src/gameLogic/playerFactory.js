@@ -6,6 +6,7 @@ function player() {
 
     return {
         fire,
+
     }
 
 }

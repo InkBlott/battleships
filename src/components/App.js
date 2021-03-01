@@ -20,6 +20,7 @@ function App() {
         cpuBoardMaker.makeBoard();
         cpuBoardMaker.populateBoard();
         playerBoardMaker.makeBoard();
+        playerBoardMaker.populateBoard();
         setPboard(playerBoardMaker.board);
         setCboard(cpuBoardMaker.board);
         setStart(!start);
@@ -45,17 +46,24 @@ function App() {
 
     function cpuFire() {
         let pBoardHolder = Object.assign({}, playerBoardMaker);
-        cpuPlayer.fire(pBoardHolder, 1, 1);
-        turn = true;
-        setp
+        let x = Math.floor(Math.random() * 10); 
+        let y = Math.floor(Math.random() * 10); 
+        while(pBoardHolder.board[x][y] === (('*') || ('!') || ('#') || ('@'))){
+            x = Math.floor(Math.random() * 10); 
+            y = Math.floor(Math.random() * 10); 
+        }
+        cpuPlayer.fire(pBoardHolder,x ,y);
+        console.log(x)
+        if(pBoardHolder.board[x][y] === '*') turn = true;
+        setPMaker(pBoardHolder);
         console.log(turn);
     }
 
     return (
         <div className='container'>
-            <div> blablabla 
+            <div>
                 {start ?
-                    <button onClick={() => startGame()}> ass</button>
+                    <button onClick={() => startGame()}> START</button>
                     :
                     <BoardContainer playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} />
                 }

@@ -25,6 +25,10 @@
     background-color:  rgb(64, 114, 170);
 }
 
+.ship{
+    background-color: rgb(165, 165, 165);
+}
+
 .noHover{
     pointer-events: none;
 }
