@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BoardContainer from './components/BoardContainer'
+import App from './components/App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BoardContainer/>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
