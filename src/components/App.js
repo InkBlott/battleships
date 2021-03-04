@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import BoardContainer from './BoardContainer'
 import { player } from '../gameLogic/playerFactory'
 import { boardFactory } from '../gameLogic/boardFactory'
+import {shipFactory} from '../gameLogic/shipFactory'
+import '../styles/Styles.css'
 
 
 function App() {
@@ -20,12 +22,25 @@ function App() {
         cpuBoardMaker.makeBoard();
         cpuBoardMaker.populateBoard();
         playerBoardMaker.makeBoard();
-        playerBoardMaker.populateBoard();
         setPboard(playerBoardMaker.board);
         setCboard(cpuBoardMaker.board);
         setStart(!start);
+    }
 
-
+    function dropper(ev, xC, yC){
+        ev.preventDefault();
+        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        if(typeof pBoardHolder.board[xC][yC] !== 'object'){
+            let data = ev.dataTransfer.getData('text/plain');
+            let ship = shipFactory(data);
+            pBoardHolder.placeShip(ship, xC, yC);
+            if(pBoardHolder.board[xC][yC] === ship) {
+                document.getElementById('4').remove();
+            }
+            setPMaker(pBoardHolder);
+            setPboard(playerBoardMaker.board);
+            console.table(pBoard);
+        }
     }
 
 
@@ -56,19 +71,18 @@ function App() {
         console.log(x)
         if(pBoardHolder.board[x][y] === '*') turn = true;
         setPMaker(pBoardHolder);
+        setPboard(playerBoardMaker.board);
         console.log(turn);
     }
 
     return (
         <div className='container'>
-            <div>
+                <div className='row-xs title'>BATTLESHIPS</div>
                 {start ?
-                    <button onClick={() => startGame()}> START</button>
+                    <button className='row' onClick={() => startGame()}> START</button>
                     :
-                    <BoardContainer playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} />
+                    <BoardContainer playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
                 }
-            </div>
-
         </div>
 
     )

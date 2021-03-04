@@ -1,15 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import Board from './Board'
+import React from 'react';
+import Board from './Board';
+import GameInfoTable from './GabeInfoTable';
 
 
-function BoardContainer({playerBoard, cpuBoard,  handler}){
+function BoardContainer({playerBoard, cpuBoard,  handler, dropper}){
+    let shipsSet = false;
 
     return(
         <div className='container'> 
             <div> 
                 <div className='row'>
-                    <Board board={playerBoard} isCpu={false}/>
+                    <Board board={playerBoard} isCpu={false} dropper={dropper}/>
+
+                    {shipsSet ?
                     <Board handler={handler} board={cpuBoard} isCpu={true}/>
+                    :
+                    <GameInfoTable/>
+                }
                 </div>
             </div>
           

@@ -31,15 +31,15 @@ class Board extends React.Component {
     
     }
 
-
-
     getDisabled(xC, yC) {
         if (this.props.board[xC][yC] === '*' || this.props.board[xC][yC] === '!' || this.props.board[xC][yC] === '@' || this.props.board[xC][yC] === '#'){
             return true
         } else return false;
     }
 
-     render(){
+
+
+    render(){
 
         
         return(
@@ -49,7 +49,7 @@ class Board extends React.Component {
                         this.props.isCpu ?  
                         <button disabled={this.getDisabled(i, j)} className={'col boardButton' + this.getClasses(i, j)} onClick={() => this.handleFire(i, j)} style= {{maxWidth :'40px', maxHeight:'40px'}}></button>
                          :
-                         <button className={'col boardButton' + this.getClasses(i, j)}></button>
+                         <button onDrop={(e)=>this.props.dropper(e, i, j)} onDragOver={(e) => e.preventDefault()} className={'col boardButton' + this.getClasses(i, j)}></button>
                     )
                 }))}
             </div>
