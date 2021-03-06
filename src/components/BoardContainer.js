@@ -3,7 +3,7 @@ import Board from './Board';
 import GameInfoTable from './GabeInfoTable';
 
 
-function BoardContainer({playerBoard, cpuBoard,  handler, dropper}){
+function BoardContainer({playerBoard, cpuBoard,  handler, dropper, isV, rotate}){
     let shipsSet = false;
 
     return(
@@ -15,7 +15,7 @@ function BoardContainer({playerBoard, cpuBoard,  handler, dropper}){
                     {shipsSet ?
                     <Board handler={handler} board={cpuBoard} isCpu={true}/>
                     :
-                    <GameInfoTable/>
+                    <GameInfoTable isV={isV} rotate={rotate}/>
                 }
                 </div>
             </div>

@@ -32,16 +32,26 @@ function App() {
         let pBoardHolder = Object.assign({}, playerBoardMaker);
         if(typeof pBoardHolder.board[xC][yC] !== 'object'){
             let data = ev.dataTransfer.getData('text/plain');
-            let ship = shipFactory(data);
+            let shipLen = parseInt((data.split('.'))[1]);
+            let ship = shipFactory(shipLen);
             pBoardHolder.placeShip(ship, xC, yC);
+            
             if(pBoardHolder.board[xC][yC] === ship) {
-                document.getElementById('4').remove();
+                document.getElementById(data).remove();
             }
             setPMaker(pBoardHolder);
             setPboard(playerBoardMaker.board);
             console.table(pBoard);
         }
     }
+
+    function rotator() {
+        let rotator = Object.assign({}, playerBoardMaker);
+        rotator.setVertical();
+        setPMaker(rotator);
+    }
+
+    
 
 
     function handleFire(xC, yC) {
@@ -81,7 +91,7 @@ function App() {
                 {start ?
                     <button className='row' onClick={() => startGame()}> START</button>
                     :
-                    <BoardContainer playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
+                    <BoardContainer rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
                 }
         </div>
 

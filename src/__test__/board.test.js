@@ -19,6 +19,17 @@ test('place ship horizontally & vertically if not within bounds of another ship'
     board.placeShip(ship4, 1 ,1 );
     expect(board.board[1][1]).toBe(ship4);
 })
+test('borders', () => {
+    const board = boardFactory();
+    const ship = shipFactory(4);
+    const ship2 = shipFactory(2);
+
+    board.makeBoard();
+    board.placeShip(ship, 6, 4);
+    board.placeShip(ship2, 2, 2);
+    board.placeShip(ship2, 3, 4);
+    console.table(board.board)
+})
 
 test('Set vertical or horizontal', () => {
     const board = boardFactory();

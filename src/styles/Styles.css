@@ -1,12 +1,15 @@
 .boardButton{
     width: 40px;
+    max-width: 40px;
+    min-width: 40px;
+    min-height: 40px;
     height: 40px;
     background-color: rgb(95, 166, 247);
     border-color: rgb(79, 79, 245);
 }
 
 .boardButton:hover{
-    background-color: rgb(115, 175, 245);
+    background-color: rgb(173, 211, 255);
 }
 
 .miss{
@@ -34,14 +37,52 @@
 }
 
 body{
-    background-color: rgb(255,235,205)
+    background-color: rgb(255,235,205);
+    font-family: 'Press Start 2P', cursive;
+    
+}
+
+.infoContainer{
+    background-color: rgb(212, 197, 175);
+    border: 5px solid rgb(134, 124, 110);
+    padding:10px;
+    max-width: 424px;
+    min-width: 424px;
+
+}
+
+.placerContainer{
+    display: flex;
+    cursor:grab;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.placerContainer:hover{
+    cursor:grab;
+}
+
+.placer{
+    border: 2px solid rgb(31, 31, 31);
 }
 
 .title{
-    font-family: 'Press Start 2P', cursive;
     text-align: center;
     font-size: 40px;
     margin-top: 25px;
     margin-bottom: 25px;
     color: 	rgb(28, 23, 97)
 }
+
+.blr {
+    width: max-content;
+    margin:0 0 10px 0;
+    justify-content: center;
+}
+
+.subT{
+    font-size: 16px;
+    justify-content: center;
+    margin: 0 0 10px 0;
+}
+

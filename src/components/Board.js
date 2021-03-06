@@ -43,7 +43,7 @@ class Board extends React.Component {
 
         
         return(
-            <div className='container' style= {{minWidth: '424px', width: '424px', height:'400px', minHeight:'400px'}}>
+            <div className='col-xs' style= {{minWidth: '424px', width: '424px', height:'400px', minHeight:'400px'}}>
                 {this.props.board.map((row, i) => row.map((col, j) => {
                     return (
                         this.props.isCpu ?  
