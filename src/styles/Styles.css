@@ -66,6 +66,10 @@ body{
     border: 2px solid rgb(31, 31, 31);
 }
 
+#mainRow{
+    justify-content: center;
+}
+
 .title{
     text-align: center;
     font-size: 40px;
@@ -86,3 +90,24 @@ body{
     margin: 0 0 10px 0;
 }
 
+.invis{
+    display:none;
+}
+
+button{
+    border-color: rgb(223, 199, 167);
+    background-color: rgb(185, 169, 146);
+    color: rgb(75, 68, 60);
+    padding: 3px;
+}
+
+button:hover{
+    background-color:rgb(187, 178, 165);
+}
+
+.swal-button {
+    border-color: rgb(223, 199, 167);
+    background-color: rgb(185, 169, 146);
+    color: rgb(75, 68, 60);
+    padding: 5px 10px;
+  }

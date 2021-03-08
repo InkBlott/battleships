@@ -4,6 +4,7 @@ import { player } from '../gameLogic/playerFactory'
 import { boardFactory } from '../gameLogic/boardFactory'
 import {shipFactory} from '../gameLogic/shipFactory'
 import '../styles/Styles.css'
+import Swal from 'sweetalert2';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     const [cBoard, setCboard] = useState();
     let turn = true;
     const [start, setStart] = useState(true);
+    const [shipsSet, setShipsS] = useState(false);
 
     function startGame() {
         setPMaker(playerBoardMaker);
@@ -27,6 +29,37 @@ function App() {
         setStart(!start);
     }
 
+    function checkWin(board) {
+        if(board.getSunkenShips === 10){
+        
+        }
+        
+    }
+
+    function setShips() {
+        if(playerBoardMaker.getCells() === 20){
+            setShipsS(!shipsSet);    
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Place your ships first',
+              })
+        }
+    }
+
+    function placer() {
+        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        pBoardHolder.populateBoard();
+        let droppables=document.getElementsByClassName('placerContainer');
+        for (let i=0; i<droppables.length; i++){
+            droppables[i].classList.add('invis');
+        }
+        setPMaker(pBoardHolder);
+        setPboard(pBoardHolder.board);
+    }
+    
+
+    //drop ship into board
     function dropper(ev, xC, yC){
         ev.preventDefault();
         let pBoardHolder = Object.assign({}, playerBoardMaker);
@@ -37,7 +70,7 @@ function App() {
             pBoardHolder.placeShip(ship, xC, yC);
             
             if(pBoardHolder.board[xC][yC] === ship) {
-                document.getElementById(data).remove();
+                document.getElementById(data).classList.add('invis');
             }
             setPMaker(pBoardHolder);
             setPboard(playerBoardMaker.board);
@@ -45,6 +78,19 @@ function App() {
         }
     }
 
+    //clear player board, display droppables
+    function reset() {
+        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        let droppables=document.getElementsByClassName('placerContainer');
+        pBoardHolder.clearBoard();
+        for (let i=0; i<droppables.length; i++){
+            droppables[i].classList.remove('invis');
+        }
+        setPMaker(pBoardHolder);
+        setPboard(playerBoardMaker.board);
+    }
+
+    //rotate ships for dropping
     function rotator() {
         let rotator = Object.assign({}, playerBoardMaker);
         rotator.setVertical();
@@ -91,7 +137,7 @@ function App() {
                 {start ?
                     <button className='row' onClick={() => startGame()}> START</button>
                     :
-                    <BoardContainer rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
+                    <BoardContainer placer={placer} shipsSet={shipsSet} setShips={setShips} reset={reset} rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
                 }
         </div>
 

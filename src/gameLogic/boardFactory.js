@@ -20,9 +20,21 @@ function boardFactory() {
           }
     }
 
+    function getCells(){
+        let cells=0;
+        for(let i = 0; i <= 9 ; i++){
+            for( let x =0; x<= 9; x++){
+                if(typeof (board)[i][x] === "object"){
+                    cells = cells+1;
+                }
+            }
+        }
+        return cells;
+    }
+
     function clearBoard(){
         for(var i=0; i<=9; i++){
-            board[i].fill();
+            board[i].fill('~');
           }
     }
 
@@ -257,6 +269,7 @@ function boardFactory() {
         receiveAttack,
         populateBoard,
         getSunkenShips : () => sunkenShips,
+        getCells,
 
     }
 
