@@ -29,13 +29,16 @@ function App() {
         setStart(!start);
     }
 
-    function checkWin(board) {
-        if(board.getSunkenShips === 10){
-        
+    function checkWin() {
+        if(playerBoardMaker.getSunkenShips === 10){
+            Swal.fire({
+
+            })
         }
         
     }
 
+    //Start playing if all ships placed
     function setShips() {
         if(playerBoardMaker.getCells() === 20){
             setShipsS(!shipsSet);    
@@ -43,12 +46,19 @@ function App() {
             Swal.fire({
                 icon: 'error',
                 text: 'Place your ships first',
+                customClass: {
+                    confirmButton: 'swal-btn',                    
+                    cancelButton: 'swal-btn'
+                  },
+                buttonsStyling:false,
               })
         }
     }
 
+    //auto-placement of player ships
     function placer() {
         let pBoardHolder = Object.assign({}, playerBoardMaker);
+        pBoardHolder.clearBoard();
         pBoardHolder.populateBoard();
         let droppables=document.getElementsByClassName('placerContainer');
         for (let i=0; i<droppables.length; i++){
