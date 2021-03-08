@@ -182,11 +182,10 @@ function App() {
         <div className='container'>
                 <div className='row-xs title'>BATTLESHIPS</div>
                 {start ?
-                    <button className='row' onClick={() => startGame()}> START</button>
+                    <button className='row startBtn' onClick={() => startGame()}> START</button>
                     :
                     <BoardContainer placer={placer} shipsSet={shipsSet} setShips={setShips} reset={reset} rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={playerBoardMaker.board} cpuBoard={cpuBoardMaker.board} handler={handleFire} dropper={dropper}/>
                 }
-                <button onClick={() => console.log(cpuBoardMaker.getSunkenShips())}></button>
         </div>
 
     )

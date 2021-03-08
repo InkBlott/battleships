@@ -28,6 +28,16 @@
     background-color:  rgb(64, 114, 170);
 }
 
+.startBtn{
+    margin: auto;
+    width: 30vw;
+    height: 5vh;
+    font-size: 2.5vh;
+    text-align: center;
+    display: table;
+    margin-top: 5vh;
+}
+
 .ship{
     background-color: rgb(165, 165, 165);
 }
@@ -74,7 +84,7 @@ body{
     text-align: center;
     font-size: 40px;
     margin-top: 25px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: 	rgb(28, 23, 97)
 }
 
