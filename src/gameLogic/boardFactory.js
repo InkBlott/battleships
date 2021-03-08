@@ -24,6 +24,14 @@ class boardFactory {
           }
     }
 
+    getSunkenShips() {
+        return this.sunkenShips;
+    }
+
+    setSunkenShips(val){
+        this.sunkenShips=val;
+    }
+
     getCells(){
         let cells=0;
         for(let i = 0; i <= 9 ; i++){
@@ -236,7 +244,7 @@ class boardFactory {
         let ship;
 
         shipLen.forEach(len => {
-            ship = shipFactory(len);
+            ship = new shipFactory(len);
             let xCoord;
             let yCoord;
 

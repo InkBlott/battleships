@@ -9,8 +9,8 @@ import clone from 'lodash/clone';
 
 
 function App() {
-    const humanPlayer = player();
-    const cpuPlayer = player();
+    const humanPlayer = new player();
+    const cpuPlayer = new player();
     const [cpuBoardMaker, setCpuMaker] = useState(new boardFactory());
     const [playerBoardMaker, setPMaker] = useState(new boardFactory());
     let turn = true;
@@ -25,13 +25,44 @@ function App() {
         setStart(!start);
     }
 
-    function checkWin() {
-        if(playerBoardMaker.getSunkenShips === 10){
+    function checkWin(sunkShips) {
+        if(sunkShips === 10){
             Swal.fire({
-
-            })
+                title: 'Congratulations!',
+                text: 'You win',
+                customClass: {
+                    confirmButton: 'swal-btn',                    
+                  },
+                buttonsStyling:false,
+                confirmButtonText:'Play again',
+                width:'auto',
+                allowOutsideClick:false,
+              }).then((result) => {
+                if(result.isConfirmed) {
+                    fullReset();
+                }
+              })
         }
-        
+    }
+
+    function checkLoss(sunkShips) {
+        if(sunkShips === 10){
+            Swal.fire({
+                title: 'You loose...',
+                text: 'Your fleet has been destroyed',
+                customClass: {
+                    confirmButton: 'swal-btn',                    
+                  },
+                buttonsStyling:false,
+                confirmButtonText:'Play again',
+                width:'auto',
+                allowOutsideClick:false,
+              }).then((result) => {
+                if(result.isConfirmed) {
+                    fullReset();
+                }
+              })
+        }
     }
 
     //Start playing if all ships placed
@@ -71,7 +102,7 @@ function App() {
         if(typeof pBoardHolder.board[xC][yC] !== 'object'){
             let data = ev.dataTransfer.getData('text/plain');
             let shipLen = parseInt((data.split('.'))[1]);
-            let ship = shipFactory(shipLen);
+            let ship = new shipFactory(shipLen);
             pBoardHolder.placeShip(ship, xC, yC);
             
             if(pBoardHolder.board[xC][yC] === ship) {
@@ -92,6 +123,25 @@ function App() {
         setPMaker(pBoardHolder);
     }
 
+    //full reset both boards after game over
+    function fullReset() {
+        let pBoardHolder = clone(playerBoardMaker);
+        let cBoardHolder = clone(cpuBoardMaker);
+        let droppables=document.getElementsByClassName('placerContainer');
+        pBoardHolder.clearBoard();
+        pBoardHolder.setSunkenShips(0);
+        cBoardHolder.clearBoard();
+        cBoardHolder.populateBoard();
+        cBoardHolder.setSunkenShips(0);
+        for (let i=0; i<droppables.length; i++){
+            droppables[i].classList.remove('invis');
+        }
+        setPMaker(pBoardHolder);
+        setCpuMaker(cBoardHolder);
+        setShipsS(false);
+    }
+
+
     //rotate ships for dropping
     function rotator() {
         let rotator = clone(playerBoardMaker);
@@ -108,9 +158,8 @@ function App() {
             turn = false;
         }
         humanPlayer.fire(cBoardHolder, xC, yC);
-        console.table(cBoardHolder.board);
-        console.table(cpuBoardMaker.board);
-        setCpuMaker(cBoardHolder);
+        setCpuMaker(cBoardHolder, checkWin(cBoardHolder.getSunkenShips()));
+        console.log(cpuBoardMaker.getSunkenShips());
         while (!turn) {
             cpuFire();
         }
@@ -125,10 +174,8 @@ function App() {
             y = Math.floor(Math.random() * 10); 
         }
         cpuPlayer.fire(pBoardHolder,x ,y);
-        console.log(x)
         if(pBoardHolder.board[x][y] === '*') turn = true;
-        setPMaker(pBoardHolder);
-        console.log(turn);
+        setPMaker(pBoardHolder, checkLoss(pBoardHolder.getSunkenShips()));
     }
 
     return (
@@ -139,6 +186,7 @@ function App() {
                     :
                     <BoardContainer placer={placer} shipsSet={shipsSet} setShips={setShips} reset={reset} rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={playerBoardMaker.board} cpuBoard={cpuBoardMaker.board} handler={handleFire} dropper={dropper}/>
                 }
+                <button onClick={() => console.log(cpuBoardMaker.getSunkenShips())}></button>
         </div>
 
     )

@@ -1,12 +1,7 @@
-function player() {
+class player {
     
-    function fire(enemyBoard, x, y){
+    fire(enemyBoard, x, y){
         enemyBoard.receiveAttack(x, y);
-    }
-
-    return {
-        fire,
-
     }
 
 }

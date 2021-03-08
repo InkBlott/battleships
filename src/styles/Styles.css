@@ -110,4 +110,6 @@ button:hover{
     background-color: rgb(185, 169, 146);
     color: rgb(75, 68, 60);
     padding: 5px 10px;
+    margin-left: 3px;
+    margin-right: 3px;
   }
