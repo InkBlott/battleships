@@ -5,27 +5,23 @@ import { boardFactory } from '../gameLogic/boardFactory'
 import {shipFactory} from '../gameLogic/shipFactory'
 import '../styles/Styles.css'
 import Swal from 'sweetalert2';
+import clone from 'lodash/clone';
 
 
 function App() {
     const humanPlayer = player();
     const cpuPlayer = player();
-    const [cpuBoardMaker, setCpuMaker] = useState(boardFactory());
-    const [playerBoardMaker, setPMaker] = useState(boardFactory());
-    const [pBoard, setPboard] = useState();
-    const [cBoard, setCboard] = useState();
+    const [cpuBoardMaker, setCpuMaker] = useState(new boardFactory());
+    const [playerBoardMaker, setPMaker] = useState(new boardFactory());
     let turn = true;
     const [start, setStart] = useState(true);
     const [shipsSet, setShipsS] = useState(false);
 
     function startGame() {
-        setPMaker(playerBoardMaker);
-        setCpuMaker(cpuBoardMaker);
+        console.log(playerBoardMaker);
         cpuBoardMaker.makeBoard();
         cpuBoardMaker.populateBoard();
         playerBoardMaker.makeBoard();
-        setPboard(playerBoardMaker.board);
-        setCboard(cpuBoardMaker.board);
         setStart(!start);
     }
 
@@ -57,7 +53,7 @@ function App() {
 
     //auto-placement of player ships
     function placer() {
-        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        let pBoardHolder = clone(playerBoardMaker);
         pBoardHolder.clearBoard();
         pBoardHolder.populateBoard();
         let droppables=document.getElementsByClassName('placerContainer');
@@ -65,14 +61,13 @@ function App() {
             droppables[i].classList.add('invis');
         }
         setPMaker(pBoardHolder);
-        setPboard(pBoardHolder.board);
     }
     
 
     //drop ship into board
     function dropper(ev, xC, yC){
         ev.preventDefault();
-        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        let pBoardHolder = clone(playerBoardMaker);
         if(typeof pBoardHolder.board[xC][yC] !== 'object'){
             let data = ev.dataTransfer.getData('text/plain');
             let shipLen = parseInt((data.split('.'))[1]);
@@ -83,26 +78,23 @@ function App() {
                 document.getElementById(data).classList.add('invis');
             }
             setPMaker(pBoardHolder);
-            setPboard(playerBoardMaker.board);
-            console.table(pBoard);
         }
     }
 
     //clear player board, display droppables
     function reset() {
-        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        let pBoardHolder = clone(playerBoardMaker);
         let droppables=document.getElementsByClassName('placerContainer');
         pBoardHolder.clearBoard();
         for (let i=0; i<droppables.length; i++){
             droppables[i].classList.remove('invis');
         }
         setPMaker(pBoardHolder);
-        setPboard(playerBoardMaker.board);
     }
 
     //rotate ships for dropping
     function rotator() {
-        let rotator = Object.assign({}, playerBoardMaker);
+        let rotator = clone(playerBoardMaker);
         rotator.setVertical();
         setPMaker(rotator);
     }
@@ -111,22 +103,21 @@ function App() {
 
 
     function handleFire(xC, yC) {
-        let cBoardHolder = Object.assign({}, cpuBoardMaker);
-        if (typeof cBoard[xC][yC] !== 'object') {
+        let cBoardHolder = clone(cpuBoardMaker);
+        if (typeof cBoardHolder.board[xC][yC] !== 'object') {
             turn = false;
         }
         humanPlayer.fire(cBoardHolder, xC, yC);
         console.table(cBoardHolder.board);
         console.table(cpuBoardMaker.board);
         setCpuMaker(cBoardHolder);
-        setCboard(cpuBoardMaker.board);
         while (!turn) {
             cpuFire();
         }
     }
 
     function cpuFire() {
-        let pBoardHolder = Object.assign({}, playerBoardMaker);
+        let pBoardHolder = clone(playerBoardMaker);
         let x = Math.floor(Math.random() * 10); 
         let y = Math.floor(Math.random() * 10); 
         while(pBoardHolder.board[x][y] === (('*') || ('!') || ('#') || ('@'))){
@@ -137,7 +128,6 @@ function App() {
         console.log(x)
         if(pBoardHolder.board[x][y] === '*') turn = true;
         setPMaker(pBoardHolder);
-        setPboard(playerBoardMaker.board);
         console.log(turn);
     }
 
@@ -147,7 +137,7 @@ function App() {
                 {start ?
                     <button className='row' onClick={() => startGame()}> START</button>
                     :
-                    <BoardContainer placer={placer} shipsSet={shipsSet} setShips={setShips} reset={reset} rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={pBoard} cpuBoard={cBoard} handler={handleFire} dropper={dropper}/>
+                    <BoardContainer placer={placer} shipsSet={shipsSet} setShips={setShips} reset={reset} rotate={rotator} isV={playerBoardMaker.getVertical()} playerBoard={playerBoardMaker.board} cpuBoard={cpuBoardMaker.board} handler={handleFire} dropper={dropper}/>
                 }
         </div>
 
