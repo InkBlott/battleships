@@ -47,6 +47,8 @@ function App() {
 
     function checkLoss(sunkShips) {
         if(sunkShips === 10){
+            turn = true;
+
             Swal.fire({
                 title: 'You loose...',
                 text: 'Your fleet has been destroyed',
