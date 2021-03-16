@@ -84,7 +84,7 @@ body{
 
 .title{
     text-align: center;
-    font-size: max(24px, 5vw);
+    font-size: max(24px, 2vw);
     margin-top: 25px;
     margin-bottom: 30px;
     color: 	rgb(28, 23, 97)
