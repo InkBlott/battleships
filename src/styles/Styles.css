@@ -78,11 +78,13 @@ body{
 
 #mainRow{
     justify-content: center;
+    min-width: 424px;
+    margin: 0 auto;
 }
 
 .title{
     text-align: center;
-    font-size: 40px;
+    font-size: max(24px, 5vw);
     margin-top: 25px;
     margin-bottom: 30px;
     color: 	rgb(28, 23, 97)
@@ -109,6 +111,7 @@ button{
     background-color: rgb(185, 169, 146);
     color: rgb(75, 68, 60);
     padding: 3px;
+    min-width: 120px;
 }
 
 button:hover{

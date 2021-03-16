@@ -6,8 +6,7 @@ function BoardContainer({placer ,shipsSet ,setShips, reset, playerBoard, cpuBoar
 
 
     return(
-        <div className='container'> 
-            <div> 
+        <div className='row'> 
                 <div className='row gy-3' id='mainRow'>
                     <Board board={playerBoard} isCpu={false} dropper={dropper}/>
 
@@ -17,8 +16,6 @@ function BoardContainer({placer ,shipsSet ,setShips, reset, playerBoard, cpuBoar
                     <GameInfoTable placer={placer} shipsSet={setShips} reset ={reset} isV={isV} rotate={rotate}/>
                 }
                 </div>
-            </div>
-          
         </div>
     )
 }
